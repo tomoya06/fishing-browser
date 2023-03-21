@@ -11,9 +11,34 @@ function doPauseFishing(tabid: number) {
   pauseFishing(genTabId(tabid));
 }
 
+let clearBadgeTimeout = 0;
+
 function doFinishFishing(tabid: number) {
   finishFishing(genTabId(tabid));
-  gotSomeFish(genTabId(tabid));
+  const myfish = gotSomeFish(genTabId(tabid));
+
+  clearTimeout(clearBadgeTimeout);
+  if (!myfish) {
+    chrome.action.setBadgeText({
+      text: ':-(',
+    });
+    chrome.action.setBadgeBackgroundColor({
+      color: '#7d787d',
+    });
+  } else {
+    chrome.action.setBadgeText({
+      text: '+1',
+    });
+    chrome.action.setBadgeBackgroundColor({
+      color: '#c92e2e',
+    });
+  }
+
+  clearBadgeTimeout = setTimeout(() => {
+    chrome.action.setBadgeText({
+      text: '',
+    });
+  }, 2000);
 }
 
 const LOADING_TABS = new Set<number>();
