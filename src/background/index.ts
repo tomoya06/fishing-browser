@@ -1,4 +1,4 @@
-import { finishFishing, genTabId, goFishing, pauseFishing } from './fishing';
+import { finishFishing, genTabId, goFishing, gotSomeFish, pauseFishing } from './fishing';
 import './logger.ts';
 
 console.info('chrome-ext template-react-ts background script');
@@ -13,25 +13,26 @@ function doPauseFishing(tabid: number) {
 
 function doFinishFishing(tabid: number) {
   finishFishing(genTabId(tabid));
+  gotSomeFish(genTabId(tabid));
 }
 
-const CREATED_TABS = new Set<number>();
+const LOADING_TABS = new Set<number>();
 let lastActiveTabInfo = 0;
 
 chrome.tabs.onCreated.addListener((tab) => {
   if (!tab.id || tab.id === chrome.tabs.TAB_ID_NONE) {
     return;
   }
-  CREATED_TABS.add(tab.id);
+  LOADING_TABS.add(tab.id);
 });
 
 chrome.tabs.onUpdated.addListener((tabid, changeInfo, tab) => {
-  if (!CREATED_TABS.has(tabid)) {
+  if (!LOADING_TABS.has(tabid)) {
     return;
   }
 
   if (changeInfo.status === 'complete' && tab.active) {
-    CREATED_TABS.delete(tabid);
+    LOADING_TABS.delete(tabid);
     doGoFishing(tabid);
 
     return;
@@ -39,6 +40,10 @@ chrome.tabs.onUpdated.addListener((tabid, changeInfo, tab) => {
 });
 
 chrome.tabs.onActivated.addListener((activeInfo) => {
+  // 首次加载完成前也会激活一次activated
+  if (LOADING_TABS.has(activeInfo.tabId)) {
+    return;
+  }
   if (lastActiveTabInfo) {
     doPauseFishing(lastActiveTabInfo);
   }
