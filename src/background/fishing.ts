@@ -31,12 +31,14 @@ export function goFishing(tabid: string) {
       isActive: true,
     });
   }
+  console.log('start fishing', tabid);
 }
 
 export function pauseFishing(tabid: string) {
   const inactiveTime = getCurTimestamp();
   const prevInfo = OPENED_TABS.get(tabid);
   if (!prevInfo) {
+    console.log('no such opned tab for pause', tabid);
     return;
   }
 
@@ -45,12 +47,14 @@ export function pauseFishing(tabid: string) {
   prevInfo.browserDuration += curDuration;
   prevInfo.isActive = false;
   OPENED_TABS.set(tabid, prevInfo);
+  console.log('pause fishing', tabid);
 }
 
 export function finishFishing(tabid: string) {
   const closedTime = getCurTimestamp();
   const prevInfo = OPENED_TABS.get(tabid);
   if (!prevInfo) {
+    console.log('no such opned tab for finish', tabid);
     return;
   }
 
@@ -71,6 +75,7 @@ export function finishFishing(tabid: string) {
   }
 
   OPENED_TABS.delete(tabid);
+  console.log('finish fishing', tabid);
 }
 
 export function genTabId(tabid: number, tabinfo?: chrome.tabs.Tab): string {

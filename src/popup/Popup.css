@@ -18,6 +18,12 @@ h3 {
   margin: 2rem auto;
 }
 
+h4 {
+  font-size: 1rem;
+  margin: 0.2rem auto;
+  color: #cccccc;
+}
+
 h6 {
   font-size: 0.5rem;
   color: #333333;

@@ -1,4 +1,5 @@
 import { finishFishing, genTabId, goFishing, pauseFishing } from './fishing';
+import './logger.ts';
 
 console.info('chrome-ext template-react-ts background script');
 
