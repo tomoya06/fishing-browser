@@ -19,6 +19,9 @@ function doFinishFishing(tabid: number) {
 
   clearTimeout(clearBadgeTimeout);
   if (!myfish) {
+    return;
+  }
+  if (!myfish.length) {
     chrome.action.setBadgeText({
       text: ':-(',
     });
@@ -27,7 +30,7 @@ function doFinishFishing(tabid: number) {
     });
   } else {
     chrome.action.setBadgeText({
-      text: '+1',
+      text: `+${myfish.length}`,
     });
     chrome.action.setBadgeBackgroundColor({
       color: '#c92e2e',

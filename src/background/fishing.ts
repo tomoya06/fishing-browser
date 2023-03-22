@@ -1,19 +1,7 @@
-import { randomizeOneFish } from '../types/fish';
+import { ClosedTabInfo, OpenedTabInfo } from '../types/common';
+import { randomizeOneFishing } from '../utils/fish';
 
 console.info('chrome-ext template-react-ts background script');
-
-interface ClosedTabInfo {
-  browserDuration: number;
-  openTimes: number;
-  activateTimes: number;
-}
-
-interface OpenedTabInfo {
-  activeTs: number;
-  isActive: boolean;
-  browserDuration: number;
-  activateTimes: number;
-}
 
 const CLOSED_TABS = new Map<string, ClosedTabInfo>();
 const OPENED_TABS = new Map<string, OpenedTabInfo>();
@@ -93,18 +81,8 @@ export function gotSomeFish(tabid: string) {
     return;
   }
 
-  const { browserDuration, activateTimes } = closedInfo;
-
-  const MAX_BROWSER_TIME = 2 * 60;
-  const browserSeconds = browserDuration / 1000;
-  const MAX_ACT_TIMES_PER_SECOND = 0.01;
-  const points =
-    (Math.min(MAX_BROWSER_TIME, browserSeconds) / MAX_BROWSER_TIME -
-      Math.max(0, activateTimes - 1 - browserSeconds * MAX_ACT_TIMES_PER_SECOND) / browserSeconds) *
-    100;
-
-  const myfish = randomizeOneFish(points);
-  console.log('i got a fish', myfish, points, closedInfo);
+  const myfish = randomizeOneFishing(closedInfo);
+  console.log('i got a fish', myfish, closedInfo);
   return myfish;
 }
 
