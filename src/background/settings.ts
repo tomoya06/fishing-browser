@@ -1,11 +1,5 @@
+import { SettingsStorage } from '../types/storage';
 import { FISH_NAME } from '../utils/fish';
-
-export interface SettingsStorage {
-  debug: boolean;
-  fishStorage: Record<FISH_NAME, number>;
-  fishRecord: { ts: number; res: FISH_NAME[] }[];
-  noop: boolean;
-}
 
 export async function getChromeStorage<
   T extends keyof SettingsStorage,

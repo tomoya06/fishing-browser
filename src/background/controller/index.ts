@@ -1,6 +1,6 @@
 import { getChromeStorage } from '../settings';
 
-chrome.runtime.onMessage.addListener(async (msg, sender, sendMessage) => {
+chrome.runtime.onMessage.addListener((msg, sender, sendMessage) => {
   console.log('from: ', sender.tab?.url || 'extension');
 
   if (msg.action === 'query') {
@@ -8,12 +8,15 @@ chrome.runtime.onMessage.addListener(async (msg, sender, sendMessage) => {
       sendMessage({ data: undefined });
       return;
     }
-
-    const res = await getChromeStorage(msg.key);
-    sendMessage({ data: res });
+    getChromeStorage(msg.key).then((res) => {
+      console.log('fetch result', msg, res);
+      sendMessage({ data: res });
+    });
+    return true;
   }
 
   sendMessage({ data: 'invalid' });
+  return;
 });
 
 export {};

@@ -1,4 +1,4 @@
-import { SettingsStorage } from '../../background/settings';
+import { SettingsStorage } from '../../types/storage';
 
 export async function fetchStorage<T extends keyof SettingsStorage, E extends SettingsStorage[T]>(
   key: T,
