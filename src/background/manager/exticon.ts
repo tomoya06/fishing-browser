@@ -4,6 +4,7 @@ let clearBadgeTimeout = 0;
 
 export function handleFinishFishing(myfish: FISH_NAME[]) {
   clearTimeout(clearBadgeTimeout);
+
   if (!myfish.length) {
     chrome.action.setBadgeText({
       text: ':-(',
