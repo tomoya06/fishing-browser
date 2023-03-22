@@ -2,7 +2,7 @@ import { FISH_NAME } from '../../utils/fish';
 
 let clearBadgeTimeout = 0;
 
-export function handleFinishFishing(myfish: FISH_NAME[]) {
+export function badgeFishingResult(myfish: FISH_NAME[]) {
   clearTimeout(clearBadgeTimeout);
 
   if (!myfish.length) {

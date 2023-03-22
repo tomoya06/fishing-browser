@@ -1,12 +1,15 @@
+import { FISH_NAME } from '../utils/fish';
+
 export interface SettingsStorage {
   debug: boolean;
+  fishStorage: Record<FISH_NAME, number>;
   noop: boolean;
 }
 
-type SettingsKeys = keyof SettingsStorage;
-
-// FIXME: type 体操
-export async function getSettings(key: SettingsKeys): Promise<any> {
+export async function getChromeStorage<
+  T extends keyof SettingsStorage,
+  E extends SettingsStorage[T],
+>(key: T): Promise<E> {
   const stokey = `fishing_browser.settings.${key}`;
 
   return new Promise((resolve) => {
@@ -16,7 +19,10 @@ export async function getSettings(key: SettingsKeys): Promise<any> {
   });
 }
 
-export async function setSettings(key: SettingsKeys, val: any): Promise<void> {
+export async function setChromeStorage<
+  T extends keyof SettingsStorage,
+  E extends SettingsStorage[T],
+>(key: T, val: E): Promise<void> {
   const stokey = `fishing_browser.settings.${key}`;
 
   await chrome.storage.local.set({

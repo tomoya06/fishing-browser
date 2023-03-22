@@ -1,5 +1,5 @@
-import { ClosedTabInfo, OpenedTabInfo } from '../types/common';
-import { randomizeOneFishing } from '../utils/fish';
+import { ClosedTabInfo, OpenedTabInfo } from '../../types/common';
+import { randomizeOneFishing } from '../../utils/fish';
 
 console.info('chrome-ext template-react-ts background script');
 

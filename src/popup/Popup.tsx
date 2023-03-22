@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import './Popup.css';
 import '../styles/switch.css';
-import { getSettings, setSettings } from '../types/settings';
 
 function App() {
   const [isDebug, setDebug] = useState(false);
@@ -9,8 +8,7 @@ function App() {
 
   useEffect(() => {
     async function init() {
-      const stDebug: boolean = (await getSettings('debug')) || false;
-      setDebug(stDebug);
+      setDebug(false);
 
       setLoading(false);
     }
@@ -30,7 +28,6 @@ function App() {
             checked={isDebug}
             onChange={(val) => {
               setDebug(val.target.checked);
-              setSettings('debug', val.target.checked);
             }}
           ></input>
           <span className="slider round"></span>
