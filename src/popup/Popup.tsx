@@ -14,27 +14,7 @@ function App() {
     }
   }, []);
 
-  return (
-    <main>
-      <h3>Popup Page!</h3>
-
-      <h6>v 0.0.0</h6>
-
-      <h4>
-        <span>debug</span>
-        <label className="switch">
-          <input
-            type="checkbox"
-            checked={isDebug}
-            onChange={(val) => {
-              setDebug(val.target.checked);
-            }}
-          ></input>
-          <span className="slider round"></span>
-        </label>
-      </h4>
-    </main>
-  );
+  return <main></main>;
 }
 
 export default App;

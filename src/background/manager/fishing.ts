@@ -1,14 +1,11 @@
 import { ClosedTabInfo, OpenedTabInfo } from '../../types/common';
+import { getCurTimestamp } from '../../utils/common';
 import { randomizeOneFishing } from '../../utils/fish';
 
 console.info('chrome-ext template-react-ts background script');
 
 const CLOSED_TABS = new Map<string, ClosedTabInfo>();
 const OPENED_TABS = new Map<string, OpenedTabInfo>();
-
-function getCurTimestamp() {
-  return new Date().getTime();
-}
 
 export function goFishing(tabid: string) {
   const newActiveTime = getCurTimestamp();
