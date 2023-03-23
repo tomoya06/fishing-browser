@@ -3,15 +3,19 @@ import {
   finishFishingV2,
   genTabId,
   goFishing,
+  goFishingV2,
   gotSomeFish,
   pauseFishing,
   pauseFishingV2,
 } from './fishing';
-import { badgeFishingResult } from './exticon';
+import { badgeFishingResult, badgeStartFishing } from './exticon';
 import { saveFishingStorage } from './storage';
 
 function doGoFishing(tabid: number) {
-  goFishing(genTabId(tabid));
+  const isNew = goFishingV2(genTabId(tabid));
+  if (isNew) {
+    badgeStartFishing();
+  }
 }
 
 function doPauseFishing(tabid: number) {
