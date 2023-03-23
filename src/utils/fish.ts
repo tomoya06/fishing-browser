@@ -1,4 +1,5 @@
 import { ClosedTabInfo } from '../types/common';
+import { FishRecordType, FishStorageType } from '../types/storage';
 import { pickFromHundred, pickOne } from './random';
 
 const NO_FISH_PERCENT = 20;
@@ -24,6 +25,16 @@ export type FISH_NAME = keyof typeof FISH_TYPES;
 const FISH_OCCORANCE_PERS = [NO_FISH_PERCENT, ...Object.values(FISH_TYPES).map((i) => i[0])];
 
 const FISH_NAME_LIST = Object.keys(FISH_TYPES) as FISH_NAME[];
+
+export function summarizeRecord(record: FishRecordType | undefined): FishStorageType {
+  const { res = [] } = record || {};
+  const output: FishStorageType = {};
+  for (const fish of res) {
+    output[fish] = (output[fish] || 0) + 1;
+  }
+
+  return output;
+}
 
 /**
  * 这次吊到多少鱼？？

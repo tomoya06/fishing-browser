@@ -7,6 +7,23 @@ main {
   margin: 0 1rem;
 }
 
+.tabpane {
+  margin: 0 0 16px 0;
+}
+
+.homeTab {
+  /* flex in vertical */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+}
+
+.lastrecord {
+  margin: 16px 0 0;
+}
+
 .collectionTab {
   max-height: 270px;
   overflow-y: auto;

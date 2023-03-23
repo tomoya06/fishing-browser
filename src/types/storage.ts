@@ -6,7 +6,7 @@ export interface FishRecordType {
   res: FISH_NAME[];
 }
 
-export type FishStorageType = Record<FISH_NAME, number>;
+export type FishStorageType = Partial<Record<FISH_NAME, number>>;
 
 export interface SettingsStorage {
   debug: boolean;
