@@ -12,6 +12,6 @@ export interface OpenedTabInfo {
 }
 
 export interface FishSessionInfo {
-  closed: Map<string, ClosedTabInfo>;
-  opened: Map<string, OpenedTabInfo>;
+  closed: Record<string, ClosedTabInfo>;
+  opened: Record<string, OpenedTabInfo>;
 }

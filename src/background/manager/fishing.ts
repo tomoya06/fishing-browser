@@ -91,7 +91,7 @@ export function goFishingV2(tabid: string): boolean {
     });
     isNew = true;
   }
-  console.log('start fishing', tabid);
+  console.log('start fishing', tabid, OPENED_TABS, CLOSED_TABS);
   return isNew;
 }
 
@@ -128,7 +128,7 @@ export function finishFishingV2(tabid: string) {
   }
 
   OPENED_TABS.delete(tabid);
-  console.log('finish fishing v2', tabid);
+  console.log('finish fishing v2', tabid, OPENED_TABS, CLOSED_TABS);
 }
 
 export function gotSomeFish(tabid: string) {
@@ -149,7 +149,7 @@ export function genTabId(tabid: number, tabinfo?: chrome.tabs.Tab): string {
 
 export function getFishSession(): FishSessionInfo {
   return {
-    closed: CLOSED_TABS,
-    opened: OPENED_TABS,
+    closed: Object.fromEntries(CLOSED_TABS.entries()),
+    opened: Object.fromEntries(OPENED_TABS.entries()),
   };
 }

@@ -7,6 +7,7 @@ import { FishSessionInfo } from '../types/common';
 import { Tabs, Form, Button } from 'antd';
 import { FISH_NAME, FISH_TYPES, summarizeRecord } from '../utils/fish';
 import Marquee from 'react-fast-marquee';
+import dayjs from 'dayjs';
 
 function FishIcon({ name, size = 16 }: { name: FISH_NAME; size?: number }) {
   const suffix = FISH_TYPES[name][2];
@@ -31,6 +32,12 @@ function App() {
       setFishStorage(fishSto);
       setFishSession(fishSess);
 
+      console.log('init', {
+        fishSess,
+        fishSto,
+        records,
+      });
+
       setLoading(false);
     }
     init();
@@ -48,25 +55,40 @@ function App() {
     const closedTabs = Object.keys(fishSession?.closed || {}).length;
     const lastFish = Object.entries(summarizeRecord(lastRecord));
 
+    let diff = dayjs().diff(dayjs(lastRecord?.ts), 'seconds');
+    let unit = 'seconds';
+    if (diff > 60) {
+      diff = diff / 60;
+      unit = 'minutes';
+    }
+    if (diff > 60) {
+      diff = diff / 60;
+      unit = 'hours';
+    }
+    if (diff > 24) {
+      diff = diff / 24;
+      unit = 'days';
+    }
+    const diffDisplay = `(${diff.toFixed(0)} ${unit} ago)`;
+
     return (
       <div className="homeTab tabpane">
         <div className="homeicon"></div>
-        <div className="sessionContainer">
-          {closedTabs > 0 && <div>You've Slammed over {closedTabs} Pools</div>}
-          <div>Fishing Among {fishingTabs} Tabs</div>
-        </div>
+        {closedTabs > 0 && <div>⚓ You've Cleaned {closedTabs} Pools ⚓</div>}
+        <div>🎣Now Fishing Among {fishingTabs} Tabs🎣</div>
         <div className="lastrecord">
-          {lastFish.length && (
+          {lastFish.length > 0 && (
             <Marquee speed={30} pauseOnHover gradientWidth={60}>
               <span>Last Time You Got... </span>
               {lastFish.map(([fishName, fishCnt]) => (
-                <span style={{ paddingLeft: 8 }}>
+                <span style={{ marginLeft: 8 }} key={fishName}>
                   <FishIcon name={fishName as FISH_NAME} size={14} />
-                  <span style={{ paddingLeft: 4 }}>
+                  <span style={{ marginLeft: 4 }}>
                     {fishCnt} {fishName}
                   </span>
                 </span>
               ))}
+              <span style={{ marginLeft: 10, marginRight: 20 }}>{diffDisplay}</span>
             </Marquee>
           )}
         </div>
