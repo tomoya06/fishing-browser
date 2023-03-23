@@ -1,4 +1,5 @@
 import { FISH_NAME } from '../utils/fish';
+import { FishSessionInfo } from './common';
 
 export interface FishRecordType {
   ts: number;
@@ -12,4 +13,8 @@ export interface SettingsStorage {
   fishStorage: FishStorageType;
   fishRecord: FishRecordType[];
   noop: boolean;
+}
+
+export interface SessionStorage {
+  fishSession: FishSessionInfo;
 }

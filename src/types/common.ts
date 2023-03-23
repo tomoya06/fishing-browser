@@ -10,3 +10,8 @@ export interface OpenedTabInfo {
   browserDuration: number;
   activateTimes: number;
 }
+
+export interface FishSessionInfo {
+  closed: Map<string, ClosedTabInfo>;
+  opened: Map<string, OpenedTabInfo>;
+}

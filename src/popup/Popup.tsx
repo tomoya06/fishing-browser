@@ -2,20 +2,30 @@ import { useEffect, useMemo, useState } from 'react';
 import './Popup.css';
 import '../styles/switch.css';
 import { FishRecordType, FishStorageType } from '../types/storage';
-import { fetchStorage } from './util';
+import { fetchSessionStorage, fetchStorage } from './util';
+import { FishSessionInfo } from '../types/common';
+import { Tabs } from 'antd';
+
+const tabs = ['HOME', 'COLLECTION', 'SETTING'];
 
 function App() {
   const [lastRecord, setLastRecord] = useState<FishRecordType | undefined>(undefined);
   const [fishStorage, setFishStorage] = useState<FishStorageType | undefined>(undefined);
+  const [fishSession, setFishSession] = useState<FishSessionInfo | undefined>(undefined);
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     async function init() {
+      setLoading(true);
       const records = (await fetchStorage('fishRecord')) || [];
       const fishSto = (await fetchStorage('fishStorage')) || ({} as FishStorageType);
-      console.log('result', records, fishSto);
+      const fishSess = (await fetchSessionStorage('fishSession')) || ({} as FishSessionInfo);
+
       setLastRecord(records[0]);
       setFishStorage(fishSto);
+      setFishSession(fishSess);
+
+      setLoading(false);
     }
     init();
   }, []);
@@ -29,21 +39,15 @@ function App() {
 
   return (
     <main>
-      <header>
-        <h3>Let's GO FISHING!</h3>
-      </header>
-      <section>
-        <h5>Last time you've got: </h5>
-        <div>{JSON.stringify(lastRecord)}</div>
-      </section>
-      <section>
-        <h5>All Fish You've Got:</h5>
-        {fishStorageList.map((item) => (
-          <div>
-            {item.name}: {item.cnt}
-          </div>
-        ))}
-      </section>
+      <Tabs
+        defaultActiveKey={tabs[0]}
+        centered
+        size="small"
+        items={tabs.map((tab) => ({
+          label: tab,
+          key: tab,
+        }))}
+      />
     </main>
   );
 }

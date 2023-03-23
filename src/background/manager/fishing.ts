@@ -1,4 +1,4 @@
-import { ClosedTabInfo, OpenedTabInfo } from '../../types/common';
+import { ClosedTabInfo, FishSessionInfo, OpenedTabInfo } from '../../types/common';
 import { getCurTimestamp } from '../../utils/common';
 import { randomizeOneFishing } from '../../utils/fish';
 
@@ -85,4 +85,11 @@ export function gotSomeFish(tabid: string) {
 
 export function genTabId(tabid: number, tabinfo?: chrome.tabs.Tab): string {
   return `${tabid}`;
+}
+
+export function getFishSession(): FishSessionInfo {
+  return {
+    closed: CLOSED_TABS,
+    opened: OPENED_TABS,
+  };
 }

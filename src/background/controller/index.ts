@@ -1,3 +1,4 @@
+import { getFishSession } from '../manager/fishing';
 import { getChromeStorage } from '../settings';
 
 chrome.runtime.onMessage.addListener((msg, sender, sendMessage) => {
@@ -13,6 +14,17 @@ chrome.runtime.onMessage.addListener((msg, sender, sendMessage) => {
       sendMessage({ data: res });
     });
     return true;
+  }
+
+  if (msg.action === 'fetch') {
+    if (!msg.key) {
+      sendMessage({ data: undefined });
+      return;
+    }
+    if (msg.key === 'fishSession') {
+      sendMessage({ data: getFishSession() });
+      return;
+    }
   }
 
   sendMessage({ data: 'invalid' });
