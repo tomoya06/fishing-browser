@@ -31,6 +31,10 @@ export default defineManifest({
       resources: ['img/logo.png'],
       matches: [],
     },
+    {
+      resources: ['img/fishes/*'],
+      matches: [],
+    },
   ],
   permissions: ['tabs', 'storage'],
 });

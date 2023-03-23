@@ -4,11 +4,19 @@ import { pickFromHundred, pickOne } from './random';
 const NO_FISH_PERCENT = 20;
 const FISH_ENTER_POOL_FREQ = 1;
 
+const fcf = (config: [number, number, string]): [number, number, string] => {
+  return config;
+};
+
 export const FISH_TYPES = {
   // 出现的概率 | 上钩的概率
-  草鱼: [50, 50],
-  巴沙鱼: [20, 20],
-  鲤鱼: [10, 20],
+  'Parrot Fish': fcf([50, 50, 'tile000']),
+  Clownfish: fcf([20, 20, 'tile001']),
+  Bonefish: fcf([10, 20, 'tile002']),
+  Bluegill: fcf([10, 20, 'tile004']),
+  Tilapia: fcf([10, 20, 'tile005']),
+  Smelt: fcf([10, 20, 'tile008']),
+  Koi: fcf([5, 20, 'tile009']),
 };
 
 export type FISH_NAME = keyof typeof FISH_TYPES;

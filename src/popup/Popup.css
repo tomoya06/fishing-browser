@@ -4,6 +4,47 @@
 }
 
 main {
-  padding: 0 1rem;
-  margin: 0 auto;
+  margin: 0 1rem;
+}
+
+.collectionTab {
+  max-height: 270px;
+  overflow-y: auto;
+  /* hide scrollbar */
+  scrollbar-width: none;
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.collectionTab::-webkit-scrollbar {
+  display: none;
+}
+
+.collectionContainer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  grid-auto-rows: minmax(100px, auto);
+  padding: 0 0 16px;
+}
+
+.fishCell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid black;
+  border-radius: 8px;
+}
+
+.fishIcon {
+  width: 24px;
+  height: 24px;
+}
+
+.fishName {
+  margin: 2px 0;
+}
+
+.fishCount {
+  font-size: 14px;
 }
