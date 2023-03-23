@@ -25,6 +25,42 @@ export function goFishing(tabid: string) {
   console.log('start fishing', tabid);
 }
 
+export function pauseFishingV2(tabid: string) {
+  // just do nothing
+  console.log('pause fishing v2', tabid);
+}
+
+export function finishFishingV2(tabid: string) {
+  const closedTime = getCurTimestamp();
+  const prevInfo = OPENED_TABS.get(tabid);
+  if (!prevInfo) {
+    console.log('no such opned tab for finish', tabid);
+    return;
+  }
+
+  const lastDuration = closedTime - prevInfo.activeTs;
+  console.log('finishFishing curDuration', lastDuration);
+  prevInfo.browserDuration += lastDuration;
+
+  const prevClosedInfo = CLOSED_TABS.get(tabid);
+  if (!prevClosedInfo) {
+    CLOSED_TABS.set(tabid, {
+      browserDuration: prevInfo.browserDuration,
+      openTimes: 1,
+      activateTimes: prevInfo.activateTimes,
+    });
+  } else {
+    CLOSED_TABS.set(tabid, {
+      browserDuration: prevClosedInfo.browserDuration + prevInfo.browserDuration,
+      openTimes: prevClosedInfo.openTimes + 1,
+      activateTimes: prevInfo.activateTimes + prevClosedInfo.activateTimes,
+    });
+  }
+
+  OPENED_TABS.delete(tabid);
+  console.log('finish fishing v2', tabid);
+}
+
 export function pauseFishing(tabid: string) {
   const inactiveTime = getCurTimestamp();
   const prevInfo = OPENED_TABS.get(tabid);

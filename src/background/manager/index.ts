@@ -1,4 +1,12 @@
-import { finishFishing, genTabId, goFishing, gotSomeFish, pauseFishing } from './fishing';
+import {
+  finishFishing,
+  finishFishingV2,
+  genTabId,
+  goFishing,
+  gotSomeFish,
+  pauseFishing,
+  pauseFishingV2,
+} from './fishing';
 import { badgeFishingResult } from './exticon';
 import { saveFishingStorage } from './storage';
 
@@ -7,11 +15,11 @@ function doGoFishing(tabid: number) {
 }
 
 function doPauseFishing(tabid: number) {
-  pauseFishing(genTabId(tabid));
+  pauseFishingV2(genTabId(tabid));
 }
 
 function doFinishFishing(tabid: number) {
-  finishFishing(genTabId(tabid));
+  finishFishingV2(genTabId(tabid));
   const myfish = gotSomeFish(genTabId(tabid));
 
   if (!myfish) {
